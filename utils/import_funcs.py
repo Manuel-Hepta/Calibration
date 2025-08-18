@@ -59,3 +59,63 @@ def extract_data_inline(filename):
     })
     
     return idx_start, idx_stop, delta_time, T, X
+
+
+def my_kalman_filter(signal, Qb=10):
+    """
+    Return the signal filtered with a Kalman filter with inertia Qb.
+    All the other parameters are set for the analysis of the radiometric signal and shouldn't be changed.
+
+    Parameters:
+    signal : list or numpy array of float values corresponding to the radiometric Temperatures (°C)
+    Qb (optional, default=10) : the parameter describing the inertia of the Kalman model, do not put under 1
+
+    Returns:
+    signal_kalman: The signal processed by the kalman filter (numpy array)
+    """
+    # Set the inertia
+    if Qb is None:
+        Qb = 10
+
+    # Initializing the system for the kalman filter
+    P0 = 0.2179  # put only one seed to make testing more reproducible
+    G0 = 0.9421
+    # P0 = np.random.rand(1, 1)
+    # G0 = np.random.rand(1, 1)
+    A = 1
+    C = 1
+    Qv = 1
+
+    if len(signal) == 0:
+        signal_kalman = np.array([])
+    else:
+        init = signal[0]
+        signal_kalman = train_kalman(signal, A, C, G0, P0, Qv, Qb, init)
+
+    return signal_kalman
+
+def train_kalman(y, A, C, G0, P0, Qv, Qb, z0):
+    z = np.zeros(len(y))
+    z[0] = z0
+    P = P0
+    G = G0
+    for i in range(len(y)-1):
+        x = y[i]
+        z_i = z[i]
+        z_next = my_predict(z_i, A, x, C, G)
+        z[i+1] = z_next
+        G, P = update_filter(G, P, A, Qv, Qb, C)
+    return z
+
+def update_filter(G, P, A, Qv, Qb, C):
+    P_next = A * (1 - G * C) * P * A + Qv
+    G_next = P_next * C / (C * P * C + Qb)
+    return G_next, P_next
+
+def my_predict(z, A, x, C, G):
+    """
+    Prediction step of the Kalman filter.
+    """
+    e = x - C * z
+    z_next = A * z + A * G * e
+    return z_next
