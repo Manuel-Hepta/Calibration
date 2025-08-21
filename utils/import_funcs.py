@@ -28,7 +28,10 @@ def extract_data_inline(filename):
     V_rad_tot = data['V_radtotal'].to_numpy()
     V_housing = data['V_housing'].to_numpy()
     V_diode = data['V_diode'].to_numpy()
-    V_spike = data['VTC2'].to_numpy()
+    if "VTC2" in data.columns:
+        V_spike = data['VTC2'].to_numpy()
+    else:
+        V_spike = data['V_antenna'].to_numpy()
  
     
     # Cooling flags
@@ -43,7 +46,7 @@ def extract_data_inline(filename):
     T = pd.DataFrame({
         'T_antenna': [float('nan')] * len(data),  # Not available in your columns
         'T_diode': V_diode,
-        'T_housing': data['VTC2'].to_numpy(),
+        # 'T_housing': data['VTC2'].to_numpy(),
         'T_display': data['V_probe'].to_numpy()
     })
     
