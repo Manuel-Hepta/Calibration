@@ -40,11 +40,11 @@ T_{rad} = T_{tissue}(1 - CL) +  T_{cable}\cdot CL
 $$
 
 $$
-T_{rad}^H - T_{rad}^C = (T_{tissue}^H - T_{tissue}^L)(1 - CL) = (T_{bath}^H - T_{bath}^L)(1 - CL)
+(T_{rad}^H - T_{rad}^C) = (T_{tissue}^H - T_{tissue}^C)(1 - CL) = (T_{bath}^H - T_{bath}^C)(1 - CL)
 $$
 
 $$
-CL = - \frac{T_{rad}^H - T_{rad}^C - (T_{bath}^H - T_{bath}^L)}{T_{bath}^H - T_{bath}^L} = - \frac{T_{rad}^H - T_{rad}^C - 25}{25}
+CL = - \frac{(T_{rad}^H - T_{rad}^C) - (T_{bath}^H - T_{bath}^C)}{T_{bath}^H - T_{bath}^C} = - \frac{T_{rad}^H - T_{rad}^C - 25}{25}
 $$
 
 $$
