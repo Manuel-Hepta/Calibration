@@ -13,7 +13,7 @@ $$
 ## Antenna
 
 $$
-T_{\text{tissue}} = \frac{T_{\text{rad}}}{1- \text{AL}} - \frac{\text{AL} \cdot T_{\text{antenna}}}{1- \text{AL}}
+T_{\text{tissue}} = \frac{T_{\text{rad}}}{\tau_{\text{A}}} - \frac{(1 - \tau_{\text{A}}) \cdot T_{\text{antenna}}}{\tau_{\text{A}}}
 $$  
 
 $$
@@ -23,55 +23,51 @@ $$
 ## Load + Cable
 
 $$
-T_{\text{tissue}} = \frac{T_{\text{rad}}}{1- \text{CL}} - \frac{\text{CL} \cdot T_{\text{cable}}}{1- \text{CL}}
+T_{\text{tissue}} = \frac{T_{\text{rad}}}{\tau_{\text{C}}} - \frac{(1 - \tau_{\text{C}}) \cdot T_{\text{cable}}}{\tau_{\text{C}}}
 $$
 
 ## Antenna + Cable
 
 $$
-T_{\text{tissue}} = \frac{1}{1- \text{AL}}\left(\frac{T_{\text{rad}} - T_{\text{cable}} \cdot \text{CL}}{1 - \text{CL}}\right) - \frac{\text{AL} \cdot T_{\text{antenna}}}{1- \text{AL}}
+T_{\text{tissue}} = \frac{1}{\tau_{\text{A}}} \left( \frac{T_{\text{rad}} - T_{\text{cable}} \cdot (1 - \tau_{\text{C}})}{\tau_{\text{C}}} \right) - \frac{(1 - \tau_{\text{A}}) \cdot T_{\text{antenna}}}{\tau_{\text{A}}}
 $$
 
-## T_cable and CL
+## T_cable and tau_C
 
 $$
-T_{\text{rad}} = T_{\text{tissue}}(1 - \text{CL}) + T_{\text{cable}} \cdot \text{CL}
-$$
-
-$$
-(T_{\text{rad}}^H - T_{\text{rad}}^C) = (T_{\text{tissue}}^H - T_{\text{tissue}}^C)(1 - \text{CL}) = (T_{\text{bath}}^H - T_{\text{bath}}^C)(1 - \text{CL})
+T_{\text{rad}} = T_{\text{tissue}} \cdot \tau_{\text{C}} + T_{\text{cable}} \cdot (1 - \tau_{\text{C}})
 $$
 
 $$
-\text{CL} = - \frac{(T_{\text{rad}}^H - T_{\text{rad}}^C) - (T_{\text{bath}}^H - T_{\text{bath}}^C)}{T_{\text{bath}}^H - T_{\text{bath}}^C} = - \frac{T_{\text{rad}}^H - T_{\text{rad}}^C - 25}{25}
+(T_{\text{rad}}^H - T_{\text{rad}}^C) = (T_{\text{tissue}}^H - T_{\text{tissue}}^C) \cdot \tau_{\text{C}} = (T_{\text{bath}}^H - T_{\text{bath}}^C) \cdot \tau_{\text{C}}
 $$
 
 $$
-T_{\text{cable}} = \frac{T_{\text{rad}}^H - T_{\text{bath}}^H (1 - \text{CL})}{\text{CL}}
+\tau_{\text{C}} = \frac{T_{\text{rad}}^H - T_{\text{rad}}^C}{T_{\text{bath}}^H - T_{\text{bath}}^C} = \frac{T_{\text{rad}}^H - T_{\text{rad}}^C}{25}
+$$
+
+$$
+T_{\text{cable}} = \frac{T_{\text{rad}}^H - T_{\text{bath}}^H \cdot \tau_{\text{C}}}{1 - \tau_{\text{C}}}
 $$
 
 ## Diode Switch
 
 $$
-\tau_{\text{cable}} = (1 - \text{CL})
+T_{\text{end\_of\_cable}} = T_{\text{hous}} \cdot \tau_{\text{C}} + T_{\text{cable}} \cdot (1 - \tau_{\text{C}})
 $$
 
 $$
-T_{\text{end\_of\_cable}} = T_{\text{hous}} \cdot \tau_{\text{cable}} + T_{\text{cable}} \cdot (1 - \tau_{\text{cable}})
+T_{\text{short}} = T_{\text{end\_of\_cable}} \cdot \tau_{\text{C}} + T_{\text{cable}} \cdot (1 - \tau_{\text{C}})
 $$
 
 $$
-T_{\text{short}} = T_{\text{end\_of\_cable}} \cdot \tau_{\text{cable}} + T_{\text{cable}} \cdot (1 - \tau_{\text{cable}})
+T_{\text{short}} = T_{\text{hous}} \cdot \tau_{\text{C}}^2 + T_{\text{cable}} \cdot (1 - \tau_{\text{C}}^2)
 $$
 
-$$
-T_{\text{short}} = T_{\text{hous}} \cdot \tau_{\text{cable}}^2 + T_{\text{cable}} \cdot (1 - \tau_{\text{cable}}^2)
-$$
-
-Solve for $\tau_{\text{cable}}$:
+Solve for $\tau_{\text{C}}$:
 
 $$
-\tau_{\text{cable}} = \pm \sqrt{\frac{T_{\text{short}} - T_{\text{cable}}}{T_{\text{hous}} - T_{\text{cable}}}}
+\tau_{\text{C}} = \pm \sqrt{\frac{T_{\text{short}} - T_{\text{cable}}}{T_{\text{hous}} - T_{\text{cable}}}}
 $$
 
 **Condition for real solutions:**
@@ -82,9 +78,7 @@ $$
 
 **If we do not know $T_{\text{cable}}$:**
 
-The equation becomes more difficult, but we can use, for example, the hot bath measurement:
-
-Rename the two unknowns ($T_{\text{cable}} = T$ and $\tau_{\text{cable}} = \tau$)
+Rename the two unknowns for easier reading: $T_{\text{cable}} = T$ and $\tau_{\text{C}} = \tau$
 
 $$
 T_{\text{rad}} = T_{\text{bath}} \cdot \tau + T \cdot (1-\tau)
