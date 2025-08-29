@@ -53,7 +53,7 @@ def plot_condition_classes(
                 current_time += duration + gap_duration
         data_sorted = condition_data.sort_values(time_index_col)
         if ax is None:
-            fig, ax = plt.subplots(figsize=(2 * len(variables)+3, 5))
+            fig, ax = plt.subplots(figsize=(2 * len(available_classes)+3, 5))
         # Plot each variable
         for var in variables:
             ax.plot(data_sorted[time_index_col], data_sorted[var] / yscale, label=labels.get(var, var))
@@ -115,7 +115,8 @@ def plot_all_conditions(
     import matplotlib.pyplot as plt
     if conditions is None:
         conditions = sorted(all_X_clean['condition'].unique())
-    fig, axes = plt.subplots(len(conditions), 1, figsize=(2 * len(variables)+3, 5*len(conditions)))
+        
+    fig, axes = plt.subplots(len(conditions), 1, figsize=(2 * len(class_order)+3, 5*len(conditions)))
     if len(conditions) == 1:
         axes = [axes]
     for idx, condition in enumerate(conditions):
