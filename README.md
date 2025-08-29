@@ -23,8 +23,30 @@ $$
 ## Load + Cable
 
 $$
+T_{\text{rad}} = T_{\text{tissue}}\cdot\tau_{\text{C}} + T_{\text{cable}} \cdot (1-\tau_{\text{C}})
+$$
+
+$$
 T_{\text{tissue}} = \frac{T_{\text{rad}}}{\tau_{\text{C}}} - \frac{(1 - \tau_{\text{C}}) \cdot T_{\text{cable}}}{\tau_{\text{C}}}
 $$
+
+$ \tau_{\text{C}} \sim 0.60$ , $T_{\text{cable}} \sim 25º\text{C}$
+
+## Load + Cable + Diplexer
+
+$$
+\tau_{\text{T}} \sim \tau_{\text{D}} \cdot \tau_{\text{C}} \, \text{ , given that: } \, T_{\text{diplexer}} \sim T_{\text{cable}} 
+$$
+
+$$
+T_{\text{rad}} = T_{\text{tissue}}\cdot\tau_{\text{T}} + T_{\text{cable}} \cdot (1-\tau_{\text{T}})
+$$
+
+$$
+T_{\text{tissue}} = \frac{T_{\text{rad}}}{\tau_{\text{T}}} - \frac{(1 - \tau_{\text{T}}) \cdot T_{\text{cable}}}{\tau_{\text{T}}}
+$$
+
+$ \tau_{\text{D}} \sim 0.90$ , $ \tau_{\text{C}} \sim 0.60$ ,  $ \tau_{\text{T}} \sim 0.54$
 
 ## Antenna + Cable
 
