@@ -74,25 +74,43 @@ $$
 
 ## Diode Switch
 
+**Open Equations when negative  bias (-):**
+
+$ \tau_{\text{d}}^+ \sim 0.003$ , $ \tau_{\text{d}}^- \sim 0.85$ , $ \tau_{\text{D}}' \sim 0.68$ , $ \tau_{\text{C}} \sim 0.60$ ,  $ \tau_{\text{T}}^- \sim 0.36$
+
 $$
-T_{\text{end\_of\_cable}} = T_{\text{hous}} \cdot \tau_{\text{C}} + T_{\text{cable}} \cdot (1 - \tau_{\text{C}})
+\tau_{\text{T}}^- \sim \tau_{\text{D}}' \cdot \tau_{\text{C}} \cdot \tau_{\text{d}}^- \, \text{ , given that: } \, T_{\text{Diplexer}} \sim T_{\text{Cable}} \sim T_{\text{diode}} 
 $$
 
 $$
-T_{\text{short}} = T_{\text{end\_of\_cable}} \cdot \tau_{\text{C}} + T_{\text{cable}} \cdot (1 - \tau_{\text{C}})
+T_{\text{rad}} = T_{\text{tissue}}\cdot\tau_{\text{T}} + T_{\text{cable}} \cdot (1-\tau_{\text{T}})
 $$
 
 $$
-T_{\text{short}} = T_{\text{hous}} \cdot \tau_{\text{C}}^2 + T_{\text{cable}} \cdot (1 - \tau_{\text{C}}^2)
+T_{\text{tissue}} = \frac{T_{\text{rad}}}{\tau_{\text{T}}} - \frac{(1 - \tau_{\text{T}}) \cdot T_{\text{cable}}}{\tau_{\text{T}}}
 $$
 
-Solve for $\tau_{\text{C}}$:
+**Shorted Equations when positive  bias (+):**
 
 $$
-\tau_{\text{C}} = \pm \sqrt{\frac{T_{\text{short}} - T_{\text{cable}}}{T_{\text{hous}} - T_{\text{cable}}}}
+T_{\text{end\_of\_cable}} = T_{\text{hous}} \cdot \tau_{\text{T}} + T_{\text{cable}} \cdot (1 - \tau_{\text{T}})
 $$
 
-**Condition for real solutions:**
+$$
+T_{\text{short}} = T_{\text{end\_of\_cable}} \cdot \tau_{\text{T}} + T_{\text{cable}} \cdot (1 - \tau_{\text{T}})
+$$
+
+$$
+T_{\text{short}} = T_{\text{hous}} \cdot \tau_{\text{T}}^2 + T_{\text{cable}} \cdot (1 - \tau_{\text{T}}^2)
+$$
+
+**If we know $T_{\text{cable}}$, we can solve for $\tau_{\text{T}}$:** 
+
+$$
+\tau_{\text{T}} = \pm \sqrt{\frac{T_{\text{short}} - T_{\text{cable}}}{T_{\text{hous}} - T_{\text{cable}}}}
+$$
+
+Condition for real solutions:
 
 $$
 \frac{T_{\text{short}} - T_{\text{cable}}}{T_{\text{hous}} - T_{\text{cable}}} \ge 0
@@ -100,7 +118,7 @@ $$
 
 **If we do not know $T_{\text{cable}}$:**
 
-Rename the two unknowns for easier reading: $T_{\text{cable}} = T$ and $\tau_{\text{C}} = \tau$
+Rename the two unknowns for easier reading: $T_{\text{cable}} = T$ and $\tau_{\text{T}} = \tau$
 
 $$
 T_{\text{rad}} = T_{\text{bath}} \cdot \tau + T \cdot (1-\tau)
@@ -126,3 +144,7 @@ Solve for $\tau$:
 $$
 \tau = \frac{-(T_{\text{bath}} - T_{\text{rad}}) \pm \sqrt{(T_{\text{bath}} - T_{\text{rad}})^2 - 4 (T_{\text{bath}} - T_{\text{hous}})(T_{\text{short}} - T_{\text{rad}})}}{2 (T_{\text{bath}} - T_{\text{hous}})}
 $$
+
+## Antenna
+
+
