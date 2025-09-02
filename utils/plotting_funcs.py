@@ -52,8 +52,10 @@ def plot_condition_classes(
             condition_data.loc[mask, time_index_col] = new_time_indices
             current_time += duration + gap_duration
     data_sorted = condition_data.sort_values(time_index_col)
+    multiple_plot = True
     if ax is None:
         fig, ax = plt.subplots(figsize=(2 * len(available_classes)+3, 5))
+        multiple_plot = False
     # Plot each variable
     for var in variables:
         ax.plot(data_sorted[time_index_col], data_sorted[var] / yscale, label=labels.get(var, var))
@@ -65,7 +67,7 @@ def plot_condition_classes(
         for group_id, group_data in cooling_flag_data.groupby('group'):
             start_time = group_data[time_index_col].min()
             end_time = group_data[time_index_col].max()
-            ax.axvspan(start_time, end_time, alpha=0.1, color='blue', edgecolor='blue', linewidth=1.5, hatch="/", label='cooling_flag' if group_id == cooling_flag_data['group'].iloc[0] else "")
+            ax.axvspan(start_time, end_time, alpha=0.1, color='blue', linewidth=1.5, hatch="/", label='cooling_flag' if group_id == cooling_flag_data['group'].iloc[0] else "")
     # Add background colors and labels for each class
     for class_name in available_classes:
         class_data = condition_data[condition_data['class'] == class_name]
@@ -87,8 +89,10 @@ def plot_condition_classes(
         if len(class_data) > 0:
             time_range = f"{class_data[time_index_col].min():.1f} - {class_data[time_index_col].max():.1f} s"
             print(f"  {class_name}: {len(class_data)} points, time range: {time_range}")
-    plt.tight_layout()
-    plt.show()
+    
+    if not multiple_plot:
+        plt.tight_layout()
+        plt.show()
 
 def plot_all_conditions(
     all_X_clean,
