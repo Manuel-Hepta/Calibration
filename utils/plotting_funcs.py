@@ -120,7 +120,7 @@ def plot_all_conditions(
     if conditions is None:
         conditions = sorted(all_X_clean['condition'].unique())
         
-    fig, axes = plt.subplots(len(conditions), 1, figsize=(2 * len(class_order)+3, 5*len(conditions)))
+    fig, axes = plt.subplots(len(conditions), 1, figsize=(2.5 * len(class_order)+3, 3.5*len(conditions)))
     if len(conditions) == 1:
         axes = [axes]
     for idx, condition in enumerate(conditions):

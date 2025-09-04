@@ -104,19 +104,8 @@ $$
 T_{\text{short}} = T_{\text{hous}} \cdot \tau_{\text{T}}^2 + T_{\text{cable}} \cdot (1 - \tau_{\text{T}}^2)
 $$
 
-**If we know $T_{\text{cable}}$, we can solve for $\tau_{\text{T}}$:** 
 
-$$
-\tau_{\text{T}} = \pm \sqrt{\frac{T_{\text{short}} - T_{\text{cable}}}{T_{\text{hous}} - T_{\text{cable}}}}
-$$
-
-Condition for real solutions:
-
-$$
-\frac{T_{\text{short}} - T_{\text{cable}}}{T_{\text{hous}} - T_{\text{cable}}} \ge 0
-$$
-
-**If we do not know $T_{\text{cable}}$:**
+**We want to solve for $\tau_{\text{T}}$ and $T_{\text{cable}}$:**
 
 Rename the two unknowns for easier reading: $T_{\text{cable}} = T$ and $\tau_{\text{T}} = \tau$
 
@@ -144,6 +133,37 @@ Solve for $\tau$:
 $$
 \tau = \frac{-(T_{\text{bath}} - T_{\text{rad}}) \pm \sqrt{(T_{\text{bath}} - T_{\text{rad}})^2 - 4 (T_{\text{bath}} - T_{\text{hous}})(T_{\text{short}} - T_{\text{rad}})}}{2 (T_{\text{bath}} - T_{\text{hous}})}
 $$
+
+
+<!-- ## Diode Switch (new equations)
+
+**Open Equations when negative  bias (-):**
+
+
+$$
+T_{\text{rad}} = T_{\text{bath}}\cdot\tau_{\text{T}}\cdot\tau_{\text{d}^-} + T_{\text{cable}} \cdot (1-\tau_{\text{T}})\cdot\tau_{\text{d}^-} + T_{\text{diode}} \cdot (1-\tau_{\text{d}}^-)
+$$
+
+**Shorted Equations when positive  bias (+):**
+
+$$
+T_{\text{short}} = T_{\text{hous}} \cdot \tau_{\text{T}}^2 + T_{\text{cable}} \cdot (1 - \tau_{\text{T}}^2)
+$$
+
+$$
+L \;=\; \frac{T_{\text{rad}} - T_{\text{diode}}\,(1-\tau_{d^-})}{\tau_{d^-}}
+$$
+$$
+\displaystyle
+\tau_{T} \;=\; \frac{-(L - T_{\text{bath}})\pm\sqrt{(L - T_{\text{bath}})^2 - 4\,(T_{\text{hous}}-T_{\text{bath}})\,(L - T_{\text{short}})}}{2\,(T_{\text{hous}}-T_{\text{bath}})}
+
+$$
+
+$$
+T_{\text{cable}} \;=\; \frac{\,L - T_{\text{tissue}}\,\tau_{T}\,}{\,1-\tau_{T}\,}
+
+$$ -->
+
 
 ## Antenna
 
