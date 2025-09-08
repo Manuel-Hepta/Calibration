@@ -83,31 +83,31 @@ $$
 $$
 
 $$
-T_{\text{rad}} = T_{\text{tissue}}\cdot\tau_{\text{T}} + T_{\text{cable}} \cdot (1-\tau_{\text{T}})
+T_{\text{rad}} = T_{\text{tissue}}\cdot\tau_{\text{T}} + T_{\text{Total}} \cdot (1-\tau_{\text{T}})
 $$
 
 $$
-T_{\text{tissue}} = \frac{T_{\text{rad}}}{\tau_{\text{T}}} - \frac{(1 - \tau_{\text{T}}) \cdot T_{\text{cable}}}{\tau_{\text{T}}}
+T_{\text{tissue}} = \frac{T_{\text{rad}}}{\tau_{\text{T}}} - \frac{(1 - \tau_{\text{T}}) \cdot T_{\text{Total}}}{\tau_{\text{T}}}
 $$
 
 **Shorted Equations when positive  bias (+):**
 
 $$
-T_{\text{end\_of\_cable}} = T_{\text{hous}} \cdot \tau_{\text{T}} + T_{\text{cable}} \cdot (1 - \tau_{\text{T}})
+T_{\text{end\_of\_cable}} = T_{\text{hous}} \cdot \tau_{\text{T}} + T_{\text{Total}} \cdot (1 - \tau_{\text{T}})
 $$
 
 $$
-T_{\text{short}} = T_{\text{end\_of\_cable}} \cdot \tau_{\text{T}} + T_{\text{cable}} \cdot (1 - \tau_{\text{T}})
+T_{\text{short}} = T_{\text{end\_of\_cable}} \cdot \tau_{\text{T}} + T_{\text{Total}} \cdot (1 - \tau_{\text{T}})
 $$
 
 $$
-T_{\text{short}} = T_{\text{hous}} \cdot \tau_{\text{T}}^2 + T_{\text{cable}} \cdot (1 - \tau_{\text{T}}^2)
+T_{\text{short}} = T_{\text{hous}} \cdot \tau_{\text{T}}^2 + T_{\text{Total}} \cdot (1 - \tau_{\text{T}}^2)
 $$
 
 
-**We want to solve for $\tau_{\text{T}}$ and $T_{\text{cable}}$:**
+**We want to solve for $\tau_{\text{T}}$ and $T_{\text{Total}}$:**
 
-Rename the two unknowns for easier reading: $T_{\text{cable}} = T$ and $\tau_{\text{T}} = \tau$
+Rename the two unknowns for easier reading: $T_{\text{Total}} = T$ and $\tau_{\text{T}} = \tau$
 
 $$
 T_{\text{rad}} = T_{\text{bath}} \cdot \tau + T \cdot (1-\tau)
