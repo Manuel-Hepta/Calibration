@@ -1,4 +1,6 @@
 import numpy as np
+from scipy.optimize import fsolve
+
 
 def T_housing_func(V_housing, HousingSlope, HousingOffset):
     return np.array(V_housing) * HousingSlope + HousingOffset
@@ -52,41 +54,40 @@ def solve_tau_and_Tcable(T_rad, T_short, T_housing, T_bath):
 
     return results
 
-# def solve_tau_and_Tcable_v2(T_rad, T_short, T_hous, T_bath, T_diode, tau_d_minus):
-#     """
-#     Solve for tau_T and T_cable using the updated diode-inclusive equations.
+def solve_tau_pre_diode_T_pre_diode(T_short, T_hous, tauSlope, tauOffset):
+    """
+    Solve for tau (0<tau<1) and T_t given:
+    T_short = T_hous * tau^2 + T_t * (1 - tau^2)
+    tau = gamma * T_t + epsilon
 
-#     Equation system:
-#       L = (T_rad - T_diode * (1 - tau_d_minus)) / tau_d_minus
-#       (T_hous - T_bath) * tau^2 + (L - T_bath) * tau + (L - T_short) = 0
 
-#     Then:
-#       T_cable = (L - T_bath * tau) / (1 - tau)
+    Parameters:
+    T_short (float): observed T_s
+    T_hous (float): T_h
+    gamma (float): gamma parameter
+    epsilon (float): epsilon parameter
 
-#     Returns only solutions with 0 <= tau <= 1.
-#     """
-#     # Step 1: effective measurement term
-#     L = (T_rad - T_diode * (1 - tau_d_minus)) / tau_d_minus
 
-#     # Quadratic coefficients
-#     a = (T_hous - T_bath)
-#     b = (L - T_bath)
-#     c = (L - T_short)
+    Returns:
+    tau (float), T_t (float) if solution exists in [0,1], else (None, None)
+    """
+    epsilon = tauOffset
+    gamma = tauSlope
 
-#     discriminant = b**2 - 4*a*c
-#     if discriminant < 0:
-#         raise ValueError("No real solution for tau_T (negative discriminant).")
+    def equations(vars):
+        tau, T_t = vars
+        eq1 = T_hous * tau**2 + T_t * (1 - tau**2) - T_short
+        eq2 = tau - (gamma * T_t + epsilon)
+        return [eq1, eq2]
 
-#     sqrt_disc = np.sqrt(discriminant)
 
-#     # Two possible roots
-#     tau1 = (-b + sqrt_disc) / (2*a) if a != 0 else None
-#     tau2 = (-b - sqrt_disc) / (2*a) if a != 0 else None
+    # initial guesses (tau ~ 0.5, T_t ~ T_short)
+    sol = fsolve(equations, [0.5, T_short])
+    tau_sol, Tt_sol = sol
 
-#     results = []
-#     for tau in [tau1, tau2]:
-#         if tau is not None and 0 <= tau <= 1 and tau != 1:
-#             T_cable = (L - T_bath * tau) / (1 - tau)
-#             results.append({"tau_T": tau, "T_total": T_cable})
 
-#     return results
+    # check validity
+    if 0 <= tau_sol <= 1:
+        return tau_sol, Tt_sol
+    else:
+        return None, None
