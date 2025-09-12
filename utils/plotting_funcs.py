@@ -1,6 +1,65 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+def plot(
+        df, variables_right, y_axes_right_lims,
+        variables_left,  y_axes_left_lims, variables_colors, labels, plot_title = "Voltage & Temperature Measurements"
+        ):
+    fig, ax1 = plt.subplots(figsize=(10, 6))
+
+    legend_lines = []
+    legend_labels = []
+    for var in variables_left:
+        ax1.plot(df.time_index, df[var], label=labels[var], color=variables_colors[var])
+    ax1.set_xlabel("Time Index (s)")
+    ax1.set_ylabel("Temperature (°C)")
+    ax1.grid(True)
+    ax1.set_ylim(y_axes_left_lims)
+    lines1, labels1 = ax1.get_legend_handles_labels()
+    legend_lines += lines1
+    legend_labels += labels1
+
+
+    if len(variables_right) > 0:
+        ax2 = ax1.twinx()
+        for var in variables_right:
+            ax2.plot(df.time_index, df[var]/1000, label=labels[var], linestyle='--', color=variables_colors[var])
+        ax2.set_ylabel("Voltage (V)")
+        ax2.grid(True, linestyle='--')
+        ax2.set_ylim(y_axes_right_lims)
+
+        # Combine legends
+
+        lines2, labels2 = ax2.get_legend_handles_labels()
+        legend_lines += lines2
+        legend_labels += labels2
+        
+    if 'cooling_flag_1' in df.columns:
+        cooling_periods = df[df['cooling_flag_1'] == 1]
+        if not cooling_periods.empty:
+            cooling_periods = cooling_periods.copy()
+            cooling_periods['group'] = (cooling_periods['time_index'].diff() != 1).cumsum()
+            for _, group in cooling_periods.groupby('group'):
+                start = group['time_index'].min()
+                end = group['time_index'].max()
+                ax1.axvspan(start, end, color='blue', alpha=0.2)
+
+    if 'power' in df.columns:
+        power_periods = df[df['power'] > 0]
+        if not power_periods.empty:
+            power_periods = power_periods.copy()
+            power_periods['group'] = (power_periods['time_index'].diff() != 1).cumsum()
+            for _, group in power_periods.groupby('group'):
+                start = group['time_index'].min()
+                end = group['time_index'].max()
+                ax1.axvspan(start, end, color='red', alpha=0.2)
+            
+    ax1.legend(legend_lines, legend_labels, loc='upper left')
+
+    plt.title(plot_title)
+    plt.tight_layout()
+    plt.show()
+
 def plot_condition_classes(
     condition_data,
     variables,
